@@ -7,6 +7,7 @@ import com.mysema.query.types.path.*;
 import com.mysema.query.types.PathMetadata;
 import javax.annotation.Generated;
 import com.mysema.query.types.Path;
+import com.mysema.query.types.path.PathInits;
 
 
 /**
@@ -23,6 +24,8 @@ public class QCompany extends EntityPathBase<Company> {
 
     //inherited
     public final NumberPath<Long> id = _super.id;
+
+    public final ListPath<griffio.contact.Address, griffio.contact.QAddress> locations = this.<griffio.contact.Address, griffio.contact.QAddress>createList("locations", griffio.contact.Address.class, griffio.contact.QAddress.class, PathInits.DIRECT2);
 
     public final StringPath name = createString("name");
 

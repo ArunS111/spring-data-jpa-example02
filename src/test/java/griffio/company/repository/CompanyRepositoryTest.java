@@ -33,6 +33,8 @@ public class CompanyRepositoryTest extends AbstractTransactionalTestNGSpringCont
         Company saved = companyRepository.save(company);
         Assert.assertTrue(saved.getId() > 0);
         Assert.assertTrue(saved.getLocations().get(0).getId() > 0);
+
+
     }
 
 }

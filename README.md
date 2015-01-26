@@ -13,9 +13,9 @@ spring-data-jpa-example02
 
 ---
 
-Upto date with latest versions
+Keep up to date with latest versions
 * spring data
 * querydsl
 * guava
 * hibernate
-*net.ttddyy:datasource-proxy
+* net.ttddyy:datasource-proxy

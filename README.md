@@ -1,9 +1,9 @@
 spring-data-jpa-example02
 =========================
 
-* Gradle build using group version overrides with fail on conflict resolution
+* Gradle build using group version overrides to intentionally fail on conflict resolution
 
-* Annotation processor generation using querydsl entities ,querydslJpa entities and autovalue.
+* Annotation processor generation using default Querydsl entities, QuerydslJpa entities and Autovalue.
 
 * Annotation Processing is disabled in the Compile Task and handled explicity for each processor.
 

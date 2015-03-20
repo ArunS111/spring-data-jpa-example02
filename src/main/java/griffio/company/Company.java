@@ -23,55 +23,57 @@ import java.util.Objects;
 @AttributeOverride(name = "id", column = @Column(name = "company_id"))
 public class Company extends PersistableSequence {
 
-    @Column(name = "name")
-    @NotNull
-    private String name;
+  private static final long serialVersionUID = -42L;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "company_id", referencedColumnName = "company_id", nullable = true)
-    private List<Address> locations = Lists.newArrayList();
+  @Column(name = "name")
+  @NotNull
+  private String name;
 
-    protected Company() {
+  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  @JoinColumn(name = "company_id", referencedColumnName = "company_id", nullable = true)
+  private List<Address> locations = Lists.newArrayList();
+
+  protected Company() {
+  }
+
+  public Company(String name) {
+    this.name = name;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public List<Address> getLocations() {
+    return locations;
+  }
+
+  public void addLocation(Address address) {
+    this.locations.add(address);
+  }
+
+  @Override
+  public boolean equals(Object object) {
+
+    if (object instanceof Company) {
+      Company that = (Company) object;
+      return java.util.Objects.equals(this.getName(), that.getName());
     }
 
-    public Company(String name) {
-        this.name = name;
-    }
+    return false;
+  }
 
-    public String getName() {
-        return name;
-    }
+  @Override
+  public int hashCode() {
+    return Objects.hash(this.getName());
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<Address> getLocations() {
-        return locations;
-    }
-
-    public void addLocation(Address address) {
-        this.locations.add(address);
-    }
-
-    @Override
-    public boolean equals(Object object) {
-
-        if (object instanceof Company) {
-            Company that = (Company) object;
-            return java.util.Objects.equals(this.getName(), that.getName());
-        }
-
-        return false;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(this.getName());
-    }
-
-    @Override
-    public String toString() {
-        return Objects.toString(name, "{name}");
-    }
+  @Override
+  public String toString() {
+    return Objects.toString(name, "{name}");
+  }
 }

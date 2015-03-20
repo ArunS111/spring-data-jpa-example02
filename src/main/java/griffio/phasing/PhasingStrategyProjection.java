@@ -7,14 +7,16 @@ import java.util.Collection;
 
 public class PhasingStrategyProjection implements Serializable {
 
-    private final Collection<PhasingStrategyContribution> contributions;
+  private static final long serialVersionUID = -42L;
 
-    @QueryProjection
-    public PhasingStrategyProjection(Collection<PhasingStrategyContribution> contributions) {
-        this.contributions = contributions;
-    }
+  private final Collection<PhasingStrategyContribution> contributions;
 
-    public Collection<PhasingStrategyContribution> getContributions() {
-        return contributions;
-    }
+  @QueryProjection
+  public PhasingStrategyProjection(Collection<PhasingStrategyContribution> contributions) {
+    this.contributions = contributions;
+  }
+
+  public Collection<PhasingStrategyContribution> getContributions() {
+    return contributions;
+  }
 }

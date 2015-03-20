@@ -15,45 +15,45 @@ import java.util.Objects;
 @MappedSuperclass
 public abstract class PersistableSequence implements Persistable<Long> {
 
-    private static final long serialVersionUID = -42L;
+  private static final long serialVersionUID = -42L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequence")
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequence")
+  private Long id;
 
-    @Override
-    public Long getId() {
-        return id;
+  @Override
+  public Long getId() {
+    return id;
+  }
+
+  protected void setId(Long id) {
+    this.id = id;
+  }
+
+  @Override
+  public boolean isNew() {
+    return getId() == null;
+  }
+
+  @Override
+  public boolean equals(Object object) {
+
+    if (object instanceof PersistableSequence) {
+      PersistableSequence that = (PersistableSequence) object;
+      return java.util.Objects.equals(this.getId(), that.getId());
     }
 
-    protected void setId(Long id) {
-        this.id = id;
-    }
+    return false;
+  }
 
-    @Override
-    public boolean isNew() {
-        return getId() == null;
-    }
+  @Override
+  public int hashCode() {
+    return Objects.hash(getId());
+  }
 
-    @Override
-    public boolean equals(Object object) {
-
-        if (object instanceof Persistable) {
-            Persistable that = (Persistable) object;
-            return java.util.Objects.equals(this.getId(), that.getId());
-        }
-
-        return false;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId());
-    }
-
-    @Override
-    public String toString() {
-        return Objects.toString(getId(), "{id}");
-    }
+  @Override
+  public String toString() {
+    return Objects.toString(getId(), "{id}");
+  }
 }
 

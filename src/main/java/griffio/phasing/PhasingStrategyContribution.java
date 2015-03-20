@@ -24,118 +24,120 @@ import java.util.Objects;
 @AttributeOverride(name = "id", column = @Column(name = "phasing_strategy_cont_id"))
 public class PhasingStrategyContribution extends PersistableSequence {
 
-    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-    @JoinColumn(name = "phasing_strategy_id", nullable = false, insertable = true, updatable = false)
-    private PhasingStrategy phasingStrategy;
+  private static final long serialVersionUID = -42L;
 
-    @NotNull
-    @Column(name = "effective_date")
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-    private LocalDate effectiveDate;
+  @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+  @JoinColumn(name = "phasing_strategy_id", nullable = false, insertable = true, updatable = false)
+  private PhasingStrategy phasingStrategy;
 
-    @Column(name = "ee_contribution", nullable = false)
-    @NotNull
+  @NotNull
+  @Column(name = "effective_date")
+  @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+  private LocalDate effectiveDate;
+
+  @Column(name = "ee_contribution", nullable = false)
+  @NotNull
+  private BigDecimal eeCont;
+
+  @Column(name = "er_contribution", nullable = false)
+  @NotNull
+  private BigDecimal erCont;
+
+  @Column(name = "processed_date")
+  @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
+  private LocalDateTime processedDate;
+
+  protected PhasingStrategyContribution() {
+  }
+
+  public PhasingStrategyContribution(LocalDate effectiveDate, BigDecimal eeCont, BigDecimal erCont, LocalDateTime processedDate) {
+    this.effectiveDate = effectiveDate;
+    this.eeCont = eeCont;
+    this.erCont = erCont;
+    this.processedDate = processedDate;
+  }
+
+  public BigDecimal getEeCont() {
+    return eeCont;
+  }
+
+  public BigDecimal getErCont() {
+    return erCont;
+  }
+
+  public LocalDate getEffectiveDate() {
+    return effectiveDate;
+  }
+
+  public PhasingStrategy getPhasingStrategy() {
+    return phasingStrategy;
+  }
+
+  public void setPhasingStrategy(final PhasingStrategy phasingStrategy) {
+    this.phasingStrategy = phasingStrategy;
+    if (!this.phasingStrategy.getPhasingStrategyContributions().contains(this)) {
+      this.phasingStrategy.getPhasingStrategyContributions().add(this);
+    }
+  }
+
+  public LocalDateTime getProcessedDate() {
+    return processedDate;
+  }
+
+  @Override
+  public boolean equals(Object object) {
+
+    if (object instanceof PhasingStrategyContribution) {
+      PhasingStrategyContribution that = (PhasingStrategyContribution) object;
+      return Objects.equals(this.eeCont, that.eeCont)
+          && Objects.equals(this.erCont, that.erCont)
+          && Objects.equals(this.effectiveDate, that.effectiveDate)
+          && Objects.equals(this.processedDate, that.processedDate);
+    }
+
+    return false;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(this.effectiveDate, this.eeCont, this.erCont, this.processedDate);
+  }
+
+  @Override
+  public String toString() {
+    return String.format("PhasingStrategyContribution{effectiveDate=%s, eeCont=%s, erCont=%s, processedDate=%s}", effectiveDate, eeCont, erCont, processedDate);
+  }
+
+  public static class Builder {
+
     private BigDecimal eeCont;
-
-    @Column(name = "er_contribution", nullable = false)
-    @NotNull
     private BigDecimal erCont;
-
-    @Column(name = "processed_date")
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
+    private LocalDate effectiveDate;
     private LocalDateTime processedDate;
 
-    protected PhasingStrategyContribution() {
+    public Builder eeCont(BigDecimal eeCont) {
+      this.eeCont = eeCont;
+      return this;
     }
 
-    public PhasingStrategyContribution(LocalDate effectiveDate, BigDecimal eeCont, BigDecimal erCont, LocalDateTime processedDate) {
-        this.effectiveDate = effectiveDate;
-        this.eeCont = eeCont;
-        this.erCont = erCont;
-        this.processedDate = processedDate;
+    public Builder erCont(BigDecimal eeCont) {
+      this.erCont = eeCont;
+      return this;
     }
 
-    public BigDecimal getEeCont() {
-        return eeCont;
+    public Builder effectiveDate(LocalDate effectiveDate) {
+      this.effectiveDate = effectiveDate;
+      return this;
     }
 
-    public BigDecimal getErCont() {
-        return erCont;
+    public Builder processedDate(LocalDateTime processedDate) {
+      this.processedDate = processedDate;
+      return this;
     }
 
-    public LocalDate getEffectiveDate() {
-        return effectiveDate;
+    public PhasingStrategyContribution build() {
+      return new PhasingStrategyContribution(effectiveDate, eeCont, erCont, processedDate);
     }
-
-    public PhasingStrategy getPhasingStrategy() {
-        return phasingStrategy;
-    }
-
-    public void setPhasingStrategy(final PhasingStrategy phasingStrategy) {
-        this.phasingStrategy = phasingStrategy;
-        if (!this.phasingStrategy.getPhasingStrategyContributions().contains(this)) {
-            this.phasingStrategy.getPhasingStrategyContributions().add(this);
-        }
-    }
-
-    public LocalDateTime getProcessedDate() {
-        return processedDate;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-
-        if (object instanceof PhasingStrategyContribution) {
-            PhasingStrategyContribution that = (PhasingStrategyContribution) object;
-            return Objects.equals(this.eeCont, that.eeCont)
-                    && Objects.equals(this.erCont, that.erCont)
-                    && Objects.equals(this.effectiveDate, that.effectiveDate)
-                    && Objects.equals(this.processedDate, that.processedDate);
-        }
-
-        return false;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(this.effectiveDate, this.eeCont, this.erCont, this.processedDate);
-    }
-
-    @Override
-    public String toString() {
-        return String.format("PhasingStrategyContribution{effectiveDate=%s, eeCont=%s, erCont=%s, processedDate=%s}", effectiveDate, eeCont, erCont, processedDate);
-    }
-
-    public static class Builder {
-
-        private BigDecimal eeCont;
-        private BigDecimal erCont;
-        private LocalDate effectiveDate;
-        private LocalDateTime processedDate;
-
-        public Builder eeCont(BigDecimal eeCont) {
-            this.eeCont = eeCont;
-            return this;
-        }
-
-        public Builder erCont(BigDecimal eeCont) {
-            this.erCont = eeCont;
-            return this;
-        }
-
-        public Builder effectiveDate(LocalDate effectiveDate) {
-            this.effectiveDate = effectiveDate;
-            return this;
-        }
-
-        public Builder processedDate(LocalDateTime processedDate) {
-            this.processedDate = processedDate;
-            return this;
-        }
-
-        public PhasingStrategyContribution build() {
-            return new PhasingStrategyContribution(effectiveDate, eeCont, erCont, processedDate);
-        }
-    }
+  }
 
 }

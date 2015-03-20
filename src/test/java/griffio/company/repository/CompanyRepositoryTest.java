@@ -17,24 +17,24 @@ import org.testng.annotations.Test;
 @TransactionConfiguration(defaultRollback = false)
 public class CompanyRepositoryTest extends AbstractTransactionalTestNGSpringContextTests {
 
-    @Autowired
-    CompanyRepository companyRepository;
+  @Autowired
+  CompanyRepository companyRepository;
 
-    @Transactional
-    public void saveCompany() {
-        Company saved = companyRepository.save(new Company("Test 1"));
-        Assert.assertTrue(saved.getId() > 0);
-    }
+  @Transactional
+  public void saveCompany() {
+    Company saved = companyRepository.save(new Company("Test 1"));
+    Assert.assertTrue(saved.getId() > 0);
+  }
 
-    @Transactional
-    public void saveCompanyWithLocation() {
-        Company company = new Company("Test 1");
-        company.addLocation(new Address("HQ", "Main Street", "A City", "MC1 123456"));
-        Company saved = companyRepository.save(company);
-        Assert.assertTrue(saved.getId() > 0);
-        Assert.assertTrue(saved.getLocations().get(0).getId() > 0);
+  @Transactional
+  public void saveCompanyWithLocation() {
+    Company company = new Company("Test 1");
+    company.addLocation(new Address("HQ", "Main Street", "A City", "MC1 123456"));
+    Company saved = companyRepository.save(company);
+    Assert.assertTrue(saved.getId() > 0);
+    Assert.assertTrue(saved.getLocations().get(0).getId() > 0);
 
 
-    }
+  }
 
 }

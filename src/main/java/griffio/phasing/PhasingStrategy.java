@@ -25,51 +25,53 @@ import static com.google.common.collect.Sets.newHashSet;
 @AttributeOverride(name = "id", column = @Column(name = "phasing_strategy_id"))
 public class PhasingStrategy extends PersistableSequence {
 
-    @Column(name = "name")
-    @NotNull
-    private String name;
+  private static final long serialVersionUID = -42L;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "company_id", nullable = false, updatable = false, insertable = true)
-    private Company company;
+  @Column(name = "name")
+  @NotNull
+  private String name;
 
-    @OneToMany(cascade = {CascadeType.PERSIST}, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "phasingStrategy")
-    private Set<PhasingStrategyContribution> phasingStrategyContributions = newHashSet();
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "company_id", nullable = false, updatable = false, insertable = true)
+  private Company company;
 
-    protected PhasingStrategy() {
-    }
+  @OneToMany(cascade = {CascadeType.PERSIST}, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "phasingStrategy")
+  private Set<PhasingStrategyContribution> phasingStrategyContributions = newHashSet();
 
-    public PhasingStrategy(String name) {
-        this.name = name;
-    }
+  protected PhasingStrategy() {
+  }
 
-    public String getName() {
-        return name;
-    }
+  public PhasingStrategy(String name) {
+    this.name = name;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public Company getCompany() {
-        return company;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public void setCompany(Company company) {
-        this.company = company;
-    }
+  public Company getCompany() {
+    return company;
+  }
 
-    public Set<PhasingStrategyContribution> getPhasingStrategyContributions() {
-        return ImmutableSet.copyOf(phasingStrategyContributions);
-    }
+  public void setCompany(Company company) {
+    this.company = company;
+  }
 
-    public void addContribution(PhasingStrategyContribution phasingStrategyContribution) {
-        phasingStrategyContributions.add(phasingStrategyContribution);
-        phasingStrategyContribution.setPhasingStrategy(this);
-    }
+  public Set<PhasingStrategyContribution> getPhasingStrategyContributions() {
+    return ImmutableSet.copyOf(phasingStrategyContributions);
+  }
 
-    public boolean remove(PhasingStrategyContribution contribution) {
-        return phasingStrategyContributions.remove(contribution);
-    }
+  public void addContribution(PhasingStrategyContribution phasingStrategyContribution) {
+    phasingStrategyContributions.add(phasingStrategyContribution);
+    phasingStrategyContribution.setPhasingStrategy(this);
+  }
+
+  public boolean remove(PhasingStrategyContribution contribution) {
+    return phasingStrategyContributions.remove(contribution);
+  }
 
 }

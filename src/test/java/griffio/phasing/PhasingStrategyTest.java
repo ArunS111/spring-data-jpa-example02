@@ -6,30 +6,30 @@ import org.testng.annotations.Test;
 @Test
 public class PhasingStrategyTest {
 
-    public void phasingStrategy() throws Exception {
+  public void phasingStrategy() throws Exception {
 
-        PhasingStrategy i = new PhasingStrategy("Phase I") {
-            @Override
-            public Long getId() {
-                return 1L;
-            }
-        };
+    PhasingStrategy i = new PhasingStrategy("Phase I") {
+      @Override
+      public Long getId() {
+        return 1L;
+      }
+    };
 
-        PhasingStrategy ii = new PhasingStrategy() {
-            @Override
-            public Long getId() {
-                return 2L;
-            }
+    PhasingStrategy ii = new PhasingStrategy() {
+      @Override
+      public Long getId() {
+        return 2L;
+      }
 
-            @Override
-            public String getName() {
-                return "Phase II";
-            }
-        };
+      @Override
+      public String getName() {
+        return "Phase II";
+      }
+    };
 
-        new EqualsTester()
-                .addEqualityGroup(i)
-                .addEqualityGroup(ii)
-                .testEquals();
-    }
+    new EqualsTester()
+        .addEqualityGroup(i)
+        .addEqualityGroup(ii)
+        .testEquals();
+  }
 }

@@ -28,44 +28,44 @@ import javax.sql.DataSource;
 @EnableJpaRepositories(basePackages = "griffio.phasing.repository")
 public class ApplicationConfiguration {
 
-    @Autowired
-    private Environment env;
+  @Autowired
+  private Environment env;
 
-    @Bean
-    public DataSource dataSource() {
-        EmbeddedDatabase datasource = new EmbeddedDatabaseBuilder().addScript("db.sql").setName("datasource1").build();
-        ProxyDataSource proxyDataSource = new ProxyDataSource();
-        proxyDataSource.setDataSource(datasource);
-        proxyDataSource.setListener(new SLF4JQueryLoggingListener());
-        return proxyDataSource;
-    }
+  @Bean
+  public DataSource dataSource() {
+    EmbeddedDatabase datasource = new EmbeddedDatabaseBuilder().addScript("db.sql").setName("datasource1").build();
+    ProxyDataSource proxyDataSource = new ProxyDataSource();
+    proxyDataSource.setDataSource(datasource);
+    proxyDataSource.setListener(new SLF4JQueryLoggingListener());
+    return proxyDataSource;
+  }
 
-    @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource, JpaVendorAdapter jpaVendorAdapter) {
-        LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
-        entityManagerFactoryBean.setDataSource(dataSource);
-        entityManagerFactoryBean.setJpaVendorAdapter(jpaVendorAdapter);
-        entityManagerFactoryBean.setPackagesToScan("griffio");
-        return entityManagerFactoryBean;
-    }
+  @Bean
+  public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource, JpaVendorAdapter jpaVendorAdapter) {
+    LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
+    entityManagerFactoryBean.setDataSource(dataSource);
+    entityManagerFactoryBean.setJpaVendorAdapter(jpaVendorAdapter);
+    entityManagerFactoryBean.setPackagesToScan("griffio");
+    return entityManagerFactoryBean;
+  }
 
-    @Bean
-    public JpaVendorAdapter jpaVendorAdapter() {
-        HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
-        jpaVendorAdapter.setDatabase(Database.HSQL);
-        jpaVendorAdapter.setGenerateDdl(false);
-        jpaVendorAdapter.setShowSql(false);
-        return jpaVendorAdapter;
-    }
+  @Bean
+  public JpaVendorAdapter jpaVendorAdapter() {
+    HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
+    jpaVendorAdapter.setDatabase(Database.HSQL);
+    jpaVendorAdapter.setGenerateDdl(false);
+    jpaVendorAdapter.setShowSql(false);
+    return jpaVendorAdapter;
+  }
 
-    @Bean
-    public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
-        return new JpaTransactionManager(entityManagerFactory);
-    }
+  @Bean
+  public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
+    return new JpaTransactionManager(entityManagerFactory);
+  }
 
-    @Bean
-    public Supplier<LocalDateTime> systemTime() {
-        return Suppliers.ofInstance(new LocalDateTime());
-    }
+  @Bean
+  public Supplier<LocalDateTime> systemTime() {
+    return Suppliers.ofInstance(new LocalDateTime());
+  }
 
 }

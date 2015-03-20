@@ -6,16 +6,16 @@ import org.testng.annotations.Test;
 @Test
 public class CompanyTest {
 
-    public void company() {
+  public void company() {
 
-        Company i = new Company("Company I");
-        Company ii = new Company();
-        ii.setName("Company II");
-        new EqualsTester()
-                .addEqualityGroup(i)
-                .addEqualityGroup(ii)
-                .testEquals();
+    Company i = new Company("Company I");
+    Company ii = new Company();
+    ii.setName("Company II");
+    new EqualsTester()
+        .addEqualityGroup(i)
+        .addEqualityGroup(ii)
+        .testEquals();
 
-    }
+  }
 
 }
